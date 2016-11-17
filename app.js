@@ -1,3 +1,4 @@
+"use strict";
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -12,7 +13,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 require('dotenv').config();
 
-var app = express();
+let app = express();
 
 mongoose.Promise = global.Promise;
 

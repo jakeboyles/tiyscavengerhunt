@@ -71,4 +71,5 @@ input {
 
 iframe {
 	margin-top:40px;
+	max-width:100%;
 }
