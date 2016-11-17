@@ -1,0 +1,28 @@
+{{#unless message}}
+	<form action="/step/answer/{{id}}" method="POST">
+
+	   <h3>Q: {{question}}</h3>
+
+	   <h3>A: <input name="answer" type="text"></h3>
+
+	   <button class="btn btn-primary">Answer</button>
+
+	</form>
+{{/unless}}
+
+
+{{#if message}}
+	<div class="success">
+	   <h1><span>Correct!</span></h1>
+	   <p>{{message}}</p>
+
+    	<form action="/step/hint/{{id}}" method="POST">
+    		<input class="form-control" name="code" placeholder="Enter your code">
+    		<button type="submit" class="btn btn-primary">Go!</button>
+    	</form>
+    </div>
+{{/if}}
+
+<h1 class="error">{{error}}</h1>
+
+
