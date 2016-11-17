@@ -1,11 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const Step = require('../models/steps');
 
 router.get('/:id', (req, res, next) => {
 	Step.find({number:req.params.id}).exec((err,response)=>{
-		if(!response[0])
-		{
+		if(!response[0]) {
 			res.render('done');
 			return;
 		} 
@@ -16,7 +15,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/answer/:id', (req, res, next) => {
    let id = req.params.id;
    Step.findOne({number:req.params.id}).exec((err,response)=>{
-		if(req.body.answer.toLowerCase() === response.answer.toLowerCase()){
+		if(req.body.answer.toLowerCase() === response.answer.toLowerCase()) {
 	   	   res.render("step",{message:response.hint,id:id});
 	   	   return;
 	    }
