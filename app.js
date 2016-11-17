@@ -32,14 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTING
 app.use('/', index);
-app.use('/users', users);
 app.use('/step', steps);
 app.use('/admin', admin);
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -52,12 +50,8 @@ passport.deserializeUser(function(user, done) {
 passport.use(new FacebookStrategy({
     clientID: process.env.FBCLIENTID,
     clientSecret: process.env.FBCLIENTSECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-     done(null, profile);
-  }
-));
+    callbackURL: process.env.URL+"/auth/facebook/callback"
+  },(accessToken, refreshToken, profile, done) => done(null, profile)));
 
 
 // Will do something with these l8ter...
@@ -72,14 +66,14 @@ passport.authenticate('facebook',
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
