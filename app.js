@@ -52,10 +52,10 @@ passport.use(new FacebookStrategy({
 },(accessToken, refreshToken, profile, done) => done(null, profile)));
 
 // Will do something with these l8ter...
-app.get('auth/facebook', passport.authenticate('facebook'));
-app.get('auth/facebook/callback',
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback',
   passport.authenticate('facebook', 
-  { successRedirect: 'step/1',
+  { successRedirect: '/step/1',
     failureRedirect: '/',
   })
 );
