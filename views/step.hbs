@@ -1,3 +1,9 @@
+{{#if user.admin}}
+<a class="lock" href="/admin"><i class="fa fa-lock"></i></a>
+{{/if}}
+
+
+
 {{#unless message}}
 	<form action="/step/answer/{{id}}" method="POST">
 
@@ -9,9 +15,6 @@
 
 	</form>
 {{/unless}}
-
-<h1>USER:{{user}}</h1>
-
 
 {{#if message}}
 	<div class="success">

@@ -73,3 +73,10 @@ iframe {
 	margin-top:40px;
 	max-width:100%;
 }
+
+.lock {
+	font-size:20px;
+	position:absolute;
+	top:20px;
+	right:20px;
+}

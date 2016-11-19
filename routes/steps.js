@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Step = require('../models/steps');
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id',isAuthenticated,(req, res, next) => {
 	Step.find({number:req.params.id}).exec((err,response)=>{
 		if(!response[0]) {
 			res.render('done');
@@ -16,7 +16,7 @@ router.get('/:id', (req, res, next) => {
 	})
 });
 
-router.post('/answer/:id', (req, res, next) => {
+router.post('/answer/:id',isAuthenticated,(req, res, next) => {
    let id = req.params.id;
    Step.findOne({number:req.params.id}).exec((err,response)=>{
 		if(req.body.answer.toLowerCase() === response.answer.toLowerCase()) {
@@ -28,7 +28,7 @@ router.post('/answer/:id', (req, res, next) => {
 	})
 })
 
-router.post('/hint/:id', (req, res, next) => {
+router.post('/hint/:id',isAuthenticated,(req, res, next) => {
    let id = req.params.id;
    Step.findOne({number:req.params.id}).exec((err,response)=>{
 
@@ -42,5 +42,13 @@ router.post('/hint/:id', (req, res, next) => {
 
 	})
 })
+
+
+function isAuthenticated(req, res, next) {
+    if (req.user)
+        return next();
+
+    res.redirect('/');
+}
 
 module.exports = router;

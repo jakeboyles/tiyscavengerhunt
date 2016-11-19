@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Step = require('../models/steps');
 
-router.post('/post',(req,res) => {
+router.post('/post',isAuthenticatedAdmin,(req,res) => {
 	let step = new Step();
 	step.number = req.body.number;
 	step.question = req.body.question;
@@ -15,6 +15,15 @@ router.post('/post',(req,res) => {
 	res.render('admin',{success:"Thanks for adding it!"});
 })
 
-router.get('/',(req,res) => res.render('admin'));
+router.get('/',isAuthenticatedAdmin, (req,res) => res.render('admin'));
+
+
+function isAuthenticatedAdmin(req, res, next) {
+    if (req.user)
+    	if(req.user.admin)
+        	return next();
+
+    res.redirect('/');
+}
 
 module.exports = router;

@@ -29,10 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.use('/', index);
-app.use('/step', steps);
-app.use('/admin', admin);
+
 
 app.use(expressSession({
     secret: 'crackalackin',
@@ -43,13 +40,16 @@ app.use(expressSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Routes
+app.use('/', index);
+app.use('/step', steps);
+app.use('/admin', admin);
+
 passport.serializeUser((user, done) => {
-  console.log("This will run");
   done(null, user.id);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log("DESERILIZED");
   User.findById(user, (err, user) => {
     done(err, user);
   });
@@ -62,11 +62,17 @@ passport.use(new FacebookStrategy({
 },(accessToken, refreshToken, profile, done) => {
   User.findOrCreate({fbID:profile.id}, (err, user) => {
       if (err) { return done(err);}
+      console.log(profile);
+      user.name = profile.displayName;
+      user.save();
       done(null, user);
     });
 }));;
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', 
+  passport.authenticate('facebook',{ scope: ['public_profile', 'email'] })
+);
+
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', 
   { successRedirect: '/step/1',
