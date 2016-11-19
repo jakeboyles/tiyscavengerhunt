@@ -1,4 +1,3 @@
-(function(){
 "use strict";
 
 const mongoose = require('mongoose');
@@ -13,4 +12,3 @@ const stepSchema = new Schema({
 });
 
 module.exports = mongoose.model('Step', stepSchema);
-})();

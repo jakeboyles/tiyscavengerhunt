@@ -10,7 +10,9 @@ router.get('/:id', (req, res, next) => {
 			res.render('done');
 			return;
 		} 
-		res.render('step',{question:response[0].question,id:req.params.id});
+
+		console.log(req.session);
+		res.render('step',{question:response[0].question,id:req.params.id,user:req.user});
 	})
 });
 

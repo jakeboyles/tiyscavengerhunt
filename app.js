@@ -4,13 +4,16 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const expressSession = require('express-session');
 const mongoose = require('mongoose');
 const index = require('./routes/index');
 const steps = require('./routes/steps');
 const admin = require('./routes/admin');
+const User = require('./models/user');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 require('dotenv').config();
+
 
 var app = express();
 
@@ -25,33 +28,45 @@ mongoose.connect(process.env.MONGOURL);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ROUTING
+// Routes
 app.use('/', index);
 app.use('/step', steps);
 app.use('/admin', admin);
 
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(expressSession({
+    secret: 'crackalackin',
+    resave: true,
+    saveUninitialized: true
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
+passport.serializeUser((user, done) => {
+  console.log("This will run");
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser((user, done) => {
+  console.log("DESERILIZED");
+  User.findById(user.id, (err, user) => {
+        done(err, user);
+    });
 });
 
 passport.use(new FacebookStrategy({
   clientID: process.env.FBCLIENTID,
   clientSecret: process.env.FBCLIENTSECRET,
   callbackURL: process.env.URL+"/auth/facebook/callback"
-},(accessToken, refreshToken, profile, done) => done(null, profile)));
+},(accessToken, refreshToken, profile, done) => {
+  User.findOrCreate({fbID:profile.id}, function(err, user) {
+      if (err) { return done(err);}
+      done(null, user);
+    });
+}));;
 
-// Will do something with these l8ter...
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', 
