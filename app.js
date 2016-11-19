@@ -12,10 +12,9 @@ const admin = require('./routes/admin');
 const User = require('./models/user');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const app = express();
+
 require('dotenv').config();
-
-
-var app = express();
 
 mongoose.Promise = global.Promise;
 
@@ -51,9 +50,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
   console.log("DESERILIZED");
-  User.findById(user.id, (err, user) => {
-        done(err, user);
-    });
+  User.findById(user, (err, user) => {
+    done(err, user);
+  });
 });
 
 passport.use(new FacebookStrategy({
@@ -61,7 +60,7 @@ passport.use(new FacebookStrategy({
   clientSecret: process.env.FBCLIENTSECRET,
   callbackURL: process.env.URL+"/auth/facebook/callback"
 },(accessToken, refreshToken, profile, done) => {
-  User.findOrCreate({fbID:profile.id}, function(err, user) {
+  User.findOrCreate({fbID:profile.id}, (err, user) => {
       if (err) { return done(err);}
       done(null, user);
     });
