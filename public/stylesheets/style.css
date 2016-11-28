@@ -113,3 +113,8 @@ table a {
 .table-striped > tbody > tr:nth-of-type(2n+1) {
 	background-color:#ebeff2;
 }
+
+.CodeMirror {
+	height:auto !important;
+	text-align:left !important;
+}

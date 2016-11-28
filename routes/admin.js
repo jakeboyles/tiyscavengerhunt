@@ -23,7 +23,7 @@ router.post('/post',isAuthenticatedAdmin,(req,res) => {
 });
 
 router.get('/',isAuthenticatedAdmin, (req,res) => {
-	let steps = Step.find().exec((err,response)=>{
+	let steps = Step.find().sort({ number: 1 }).exec((err,response)=>{
 		res.render('admin',{steps:response, title:"Admin page"})
 	})
 });

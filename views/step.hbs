@@ -5,7 +5,8 @@
 {{#unless message}}
 	<form action="/step/answer/{{id}}" method="POST">
 
-	   <h3>Q: {{question}}</h3>
+	   <h3>Q:</h3> <div id="code"></div>
+
 
 	   <h3>A: <input name="answer" type="text"></h3>
 
@@ -17,9 +18,9 @@
 {{#if message}}
 	<div class="success">
 	   <h1><span>Correct!</span></h1>
-	   <p>{{message}}</p>
-
+	   <h3>The clue for your next destination is:<br> "{{message}}"</h3>
     	<form action="/step/hint/{{id}}" method="POST">
+    		<label for="code">Enter Your Code Below</label>
     		<input class="form-control" name="code" placeholder="Enter your code">
     		<button type="submit" class="btn btn-primary">Go!</button>
     	</form>
@@ -27,5 +28,21 @@
 {{/if}}
 
 <h1 class="error">{{error}}</h1>
+
+
+<!-- There is a better way to do this, too lazy right now-->
+
+<script type="text/javascript">
+  window.onload = function() {
+    editor = CodeMirror(document.getElementById("code"), {
+      mode: "javascript",
+      lineNumbers:true,
+      value: '{{{question}}}',
+      indentUnit:0,
+    });
+  };
+</script>
+
+
 
 
