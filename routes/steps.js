@@ -12,7 +12,7 @@ router.get('/:id',isAuthenticated,(req, res, next) => {
 		} 
 
 		console.log(req.session);
-		res.render('step',{question:response[0].question,id:req.params.id,user:req.user});
+		res.render('step',{question:response[0].question,id:req.params.id,user:req.user,title:"Step Number"});
 	})
 });
 
@@ -42,7 +42,6 @@ router.post('/hint/:id',isAuthenticated,(req, res, next) => {
 
 	})
 })
-
 
 function isAuthenticated(req, res, next) {
     if (req.user)

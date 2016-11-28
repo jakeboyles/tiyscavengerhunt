@@ -24,7 +24,6 @@ a {
 	color:#fff;
 }
 
-
 input {
 	color:#fff;
 	background-color:transparent;
@@ -45,7 +44,6 @@ input {
 	color:#6fbbb7;
 	font-weight:800;
 }
-
 
 .btn {
 	background-color:transparent;
@@ -79,4 +77,39 @@ iframe {
 	position:absolute;
 	top:20px;
 	right:20px;
+}
+
+table {
+	background-color:white;
+	color:grey;
+	border:3px solid lightgrey;
+	clear:both;
+	width:100%;
+}
+
+table td, table th {
+	padding:8px 15px;
+	text-align: center;
+	border-right:2px solid lightgrey;
+}
+
+th {
+	background-color:black;
+	color:white;
+	font-size:22px;
+	text-transform: uppercase;
+}
+
+form label {
+	float:left;
+}
+
+table a {
+	color:darkgrey;
+	font-weight:700;
+	text-transform: uppercase
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+	background-color:#ebeff2;
 }

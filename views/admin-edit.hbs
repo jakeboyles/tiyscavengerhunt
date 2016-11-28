@@ -1,0 +1,18 @@
+<h1>Admin Page</h1>
+
+
+<form class="admin" action="/admin/edit/{{step._id}}" method="POST">
+	<label for="Question">Question</label>
+	<input class="form-control" value="{{step.question}}" type="text" placeholder="Question" name="question">
+	
+	<label for="answer">Answer</label>
+	<input class="form-control" value="{{step.answer}}" type="text" placeholder="Questions Answer" name="answer">
+	
+	<label for="hint">Hint</label>
+	<input class="form-control" value="{{step.hint}}" type="text" placeholder="Hint" name="hint">
+
+	<label for="hintAnswer">Hint Answer</label>
+	<input class="form-control" value="{{step.hintAnswer}}" type="text" placeholder="Hint Answer" name="hintAnswer">
+	
+	<button class="btn btn-primary" type="submit">Edit Step</button>
+</form>

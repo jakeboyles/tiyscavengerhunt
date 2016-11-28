@@ -1,12 +1,21 @@
-<h1>Admin Page</h1>
+<h1 class="pull-left">Admin Page</h1>
+<a href="/admin/post" class="pull-right btn btn-primary">Add</a>
+<table class="table-striped">
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>Hint</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each steps}}
+		    <tr>
+		    <td>{{this.question}}</td>
+		    <td>{{this.hint}}</td>
+		    <td><a href="/admin/edit/{{this._id}}">Edit</a></td>
+		    </tr>
+		{{/each}}
+	</tbody>
+</table>
 
-<h2>{{success}}</h2>
-
-<form class="admin" action="/admin/post" method="POST">
-	<input class="form-control" type="number" placeholder="Number" name="number">
-	<input class="form-control" type="text" placeholder="Question" name="question">
-	<input class="form-control" type="text" placeholder="Questions Answer" name="answer">
-	<input class="form-control" type="text" placeholder="Hint" name="hint">
-	<input class="form-control" type="text" placeholder="Hint Answer" name="hintAnswer">
-	<button class="btn btn-primary" type="submit">Add Step</button>
-</form>
